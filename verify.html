@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>E-Mail bestätigt — Brainio</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    background: linear-gradient(180deg, #3D3F8E 0%, #6C5CE7 100%);
+    color: #FFF;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .card {
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+    padding: 40px 28px;
+  }
+  .check {
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 24px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 56px;
+    line-height: 1;
+    color: #FFD27A;
+  }
+  h1 {
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+    font-weight: 700;
+  }
+  p {
+    font-size: 1rem;
+    opacity: 0.85;
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+  .small {
+    font-size: 0.85rem;
+    opacity: 0.7;
+    margin-top: 18px;
+  }
+  .btn {
+    display: inline-block;
+    margin-top: 28px;
+    padding: 14px 32px;
+    background: #FFF;
+    color: #3D3F8E;
+    border-radius: 14px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+  .btn:active { transform: scale(0.98); }
+  .lang-en { display: none; }
+  :lang(en) .lang-de, html[lang="en"] .lang-de { display: none; }
+  :lang(en) .lang-en, html[lang="en"] .lang-en { display: block; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="check">✓</div>
+  <h1 class="lang-de">E-Mail bestätigt</h1>
+  <h1 class="lang-en">Email verified</h1>
+  <p class="lang-de">Deine E-Mail-Adresse wurde erfolgreich bestätigt.</p>
+  <p class="lang-en">Your email address has been successfully verified.</p>
+  <p class="lang-de" id="redirecting-de">Du wirst zur Brainio-App weitergeleitet…</p>
+  <p class="lang-en" id="redirecting-en">Redirecting you to the Brainio app…</p>
+  <a class="btn" id="openApp" href="brainio://email-verified">
+    <span class="lang-de">Zur App</span>
+    <span class="lang-en">Open Brainio</span>
+  </a>
+  <p class="small lang-de">Falls nichts passiert: schließe diesen Tab und öffne die App manuell — du bist verifiziert.</p>
+  <p class="small lang-en">If nothing happens: close this tab and open the app manually — you are verified.</p>
+</div>
+<script>
+  // Try to auto-open the app via custom URL scheme. Mobile browsers will
+  // prompt "Open in Brainio?". Desktop browsers will silently no-op which is
+  // why we also show the manual button + reassurance text.
+  setTimeout(function () {
+    window.location.href = 'brainio://email-verified';
+  }, 1200);
+
+  // Pick language from query string or browser
+  (function () {
+    var params = new URLSearchParams(window.location.search);
+    var lang = params.get('lang') || (navigator.language || 'en').slice(0, 2);
+    if (lang !== 'de') document.documentElement.setAttribute('lang', 'en');
+  })();
+</script>
+</body>
+</html>
